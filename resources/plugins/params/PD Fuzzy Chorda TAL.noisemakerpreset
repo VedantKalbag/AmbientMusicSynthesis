@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tal curprogram="0" version="1.7" presetName="PD Fuzzy Chorda TAL"
+     path="Factory Presets/PAD/PD Fuzzy Chorda TAL.noisemakerpreset">
+  <programs>
+    <program programname="PD Fuzzy Chorda TAL" unknown="0.5" volume="0.2840000092983246"
+             filtertype="0.2727272808551788" cutoff="0.2760000228881836" resonance="0.1080000028014183"
+             keyfollow="1.0" filtercontour="0.6160000562667847" filterattack="0.4680000245571136"
+             filterdecay="0.612000048160553" filtersustain="0.04000000283122063"
+             filterrelease="0.6360000371932983" ampattack="0.484000027179718"
+             ampdecay="0.6200000047683716" ampsustain="0.2120000123977661"
+             amprelease="0.5879999995231628" osc1volume="0.6720000505447388"
+             osc2volume="0.5680000185966492" osc3volume="0.5400000214576721"
+             oscmastertune="0.5" osc1tune="0.1340000033378601" osc2tune="0.3800000250339508"
+             osc1finetune="0.5600000023841858" osc2finetune="0.5400000214576721"
+             osc1waveform="0.5" osc2waveform="0.25" oscsync="0.0" lfo1waveform="0.0"
+             lfo2waveform="0.05200000107288361" lfo1rate="0.320000022649765"
+             lfo2rate="0.3080000281333923" lfo1amount="0.5360000133514404"
+             lfo2amount="0.4200000166893005" lfo1destination="0.2857142984867096"
+             lfo2destination="0.4285714328289032" lfo1Phase="0.0" lfo2Phase="0.0"
+             osc2fm="0.0" osc2phase="0.0" osc1pw="0.2960000038146973" osc1phase="0.5"
+             transpose="1.0" freeadattack="0.0" freeaddecay="0.0" freeadamount="0.0"
+             freeaddestination="0.0" lfo1sync="0.0" lfo1keytrigger="0.0" lfo2sync="0.0"
+             lfo2keytrigger="1.0" portamento="0.0" portamentomode="0.0" voices="0.6000000238418579"
+             velocityvolume="0.0" velocitycontour="0.3880000114440918" velocityfilter="0.0"
+             pitchwheelcutoff="0.0" pitchwheelpitch="1.0" ringmodulation="0.0"
+             chorus1enable="1.0" chorus2enable="0.0" reverbwet="0.0" reverbdecay="0.6840000152587891"
+             reverbpredelay="0.0" reverbhighcut="0.0" reverblowcut="1.0" oscbitcrusher="1.0"
+             highpass="0.0" detune="0.3600000143051147" vintagenoise="0.0"
+             panic="0.0" midilearn="0.0" envelopeeditordest1="0.2857142984867096"
+             envelopeeditorspeed="1.0" envelopeeditoramount="0.1720000058412552"
+             envelopeOneShot="0.0" envelopefixtempo="0.0" envelopereset="0.0"
+             filterdrive="0.01600000075995922" delaywet="0.1600000113248825"
+             delaytime="0.8280000686645508" delaysync="1.0" delayfactorl="1.0"
+             delayfactorR="0.0" delayhighshelf="0.1720000058412552" delaylowshelf="0.08000000566244125"
+             delayfeedback="0.09600000083446503" midiclear="0.0" midilock="0.0">
+      <splinePoints>
+        <splinePoint isStartPoint="1" isEndPoint="0" centerPointX="0.0" centerPointY="0.5"
+                     controlPointLeftX="0.0" controlPointLeftY="0.5" controlPointRightX="0.1000000014901161"
+                     controlPointRightY="0.5"/>
+        <splinePoint isStartPoint="0" isEndPoint="0" centerPointX="0.2444444447755814"
+                     centerPointY="0.8050000071525574" controlPointLeftX="0.1444444507360458"
+                     controlPointLeftY="0.8050000071525574" controlPointRightX="0.3444444537162781"
+                     controlPointRightY="0.8050000071525574"/>
+        <splinePoint isStartPoint="0" isEndPoint="0" centerPointX="0.7555555701255798"
+                     centerPointY="0.06000000238418579" controlPointLeftX="0.6555555462837219"
+                     controlPointLeftY="0.06000000238418579" controlPointRightX="0.8555555939674377"
+                     controlPointRightY="0.06000000238418579"/>
+        <splinePoint isStartPoint="0" isEndPoint="1" centerPointX="1.0" centerPointY="0.5"
+                     controlPointLeftX="0.8999999761581421" controlPointLeftY="0.5"
+                     controlPointRightX="1.0" controlPointRightY="0.5"/>
+      </splinePoints>
+    </program>
+  </programs>
+  <midimap/>
+</tal>

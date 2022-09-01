@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tal curprogram="0" version="1.7" presetName="PD Bellomatism FN" path="Factory Presets/PAD/PD Bellomatism FN.noisemakerpreset">
+  <programs>
+    <program programname="PD Bellomatism FN" unknown="0.5" volume="0.5160000324249268"
+             filtertype="0.3636363744735718" cutoff="0.2200000137090683" resonance="0.0"
+             keyfollow="0.0" filtercontour="0.5" filterattack="0.0" filterdecay="0.0"
+             filtersustain="1.0" filterrelease="0.0" ampattack="0.5640000104904175"
+             ampdecay="0.5120000243186951" ampsustain="0.0" amprelease="0.6160000562667847"
+             osc1volume="0.7440000176429749" osc2volume="0.7920000553131104"
+             osc3volume="0.0" oscmastertune="0.5" osc1tune="1.0" osc2tune="0.5120000243186951"
+             osc1finetune="0.5160000324249268" osc2finetune="0.4960000216960907"
+             osc1waveform="0.5" osc2waveform="0.75" oscsync="0.0" lfo1waveform="0.0"
+             lfo2waveform="0.0" lfo1rate="0.0" lfo2rate="0.3880000114440918"
+             lfo1amount="0.0" lfo2amount="0.8600000143051147" lfo1destination="0.0"
+             lfo2destination="0.7142857313156128" lfo1Phase="0.0" lfo2Phase="0.0"
+             osc2fm="0.0" osc2phase="0.0" osc1pw="0.0" osc1phase="0.0" transpose="0.7360000610351562"
+             freeadattack="0.4000000059604645" freeaddecay="0.3680000305175781"
+             freeadamount="1.0" freeaddestination="0.800000011920929" lfo1sync="0.0"
+             lfo1keytrigger="0.0" lfo2sync="0.0" lfo2keytrigger="0.0" portamento="0.0"
+             portamentomode="0.0" voices="1.0" velocityvolume="0.9240000247955322"
+             velocitycontour="0.0" velocityfilter="0.0" pitchwheelcutoff="0.2520000040531158"
+             pitchwheelpitch="0.0" ringmodulation="0.0" chorus1enable="1.0"
+             chorus2enable="0.0" reverbwet="0.328000009059906" reverbdecay="0.3960000276565552"
+             reverbpredelay="0.1720000058412552" reverbhighcut="0.2720000147819519"
+             reverblowcut="1.0" oscbitcrusher="1.0" highpass="0.4480000138282776"
+             detune="0.0" vintagenoise="0.0" panic="0.0" midilearn="0.0" envelopeeditordest1="0.0"
+             envelopeeditorspeed="0.0" envelopeeditoramount="0.0" envelopeOneShot="0.0"
+             envelopefixtempo="0.0" envelopereset="0.0" filterdrive="0.0"
+             delaywet="0.0" delaytime="0.5" delaysync="0.0" delayfactorl="0.0"
+             delayfactorR="0.0" delayhighshelf="0.0" delaylowshelf="0.0" delayfeedback="0.5"
+             midiclear="0.0" midilock="0.0">
+      <splinePoints>
+        <splinePoint isStartPoint="1" isEndPoint="0" centerPointX="0.0" centerPointY="0.5"
+                     controlPointLeftX="0.0" controlPointLeftY="0.5" controlPointRightX="0.1000000014901161"
+                     controlPointRightY="0.5"/>
+        <splinePoint isStartPoint="0" isEndPoint="1" centerPointX="1.0" centerPointY="0.5"
+                     controlPointLeftX="0.8999999761581421" controlPointLeftY="0.5"
+                     controlPointRightX="1.0" controlPointRightY="0.5"/>
+      </splinePoints>
+    </program>
+  </programs>
+  <midimap/>
+</tal>

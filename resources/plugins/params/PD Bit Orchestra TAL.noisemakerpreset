@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tal curprogram="0" version="1.7" presetName="PD Bit Orchestra TAL"
+     path="Factory Presets/PAD/PD Bit Orchestra TAL.noisemakerpreset">
+  <programs>
+    <program programname="PD Bit Orchestra TAL" unknown="0.5" volume="0.3560000061988831"
+             filtertype="0.2727272808551788" cutoff="0.3040000200271606" resonance="0.300000011920929"
+             keyfollow="0.0" filtercontour="0.6800000071525574" filterattack="0.656000018119812"
+             filterdecay="0.9320000410079956" filtersustain="0.0" filterrelease="0.7400000095367432"
+             ampattack="0.4160000085830688" ampdecay="0.0" ampsustain="1.0"
+             amprelease="0.6000000238418579" osc1volume="0.4520000219345093"
+             osc2volume="0.4760000109672546" osc3volume="0.3400000035762787"
+             oscmastertune="0.5" osc1tune="0.242000013589859" osc2tune="0.3880000114440918"
+             osc1finetune="0.5800000429153442" osc2finetune="0.6040000319480896"
+             osc1waveform="0.5" osc2waveform="0.0" oscsync="0.0" lfo1waveform="0.0"
+             lfo2waveform="0.0" lfo1rate="0.1240000054240227" lfo2rate="0.1160000041127205"
+             lfo1amount="0.8760000467300415" lfo2amount="0.800000011920929"
+             lfo1destination="0.5714285969734192" lfo2destination="0.1428571492433548"
+             lfo1Phase="0.0" lfo2Phase="0.0" osc2fm="0.4480000138282776" osc2phase="0.0"
+             osc1pw="0.5279999971389771" osc1phase="0.5" transpose="1.0" freeadattack="0.0"
+             freeaddecay="0.0" freeadamount="0.0" freeaddestination="0.0"
+             lfo1sync="0.0" lfo1keytrigger="0.0" lfo2sync="0.0" lfo2keytrigger="0.0"
+             portamento="0.0" portamentomode="0.0" voices="0.6000000238418579"
+             velocityvolume="0.0" velocitycontour="0.0" velocityfilter="0.0"
+             pitchwheelcutoff="0.0" pitchwheelpitch="0.1680000126361847" ringmodulation="0.3680000305175781"
+             chorus1enable="1.0" chorus2enable="0.0" reverbwet="0.6160000562667847"
+             reverbdecay="0.812000036239624" reverbpredelay="0.0" reverbhighcut="0.0"
+             reverblowcut="0.8560000658035278" oscbitcrusher="1.0" highpass="0.328000009059906"
+             detune="0.5560000538825989" vintagenoise="0.0" panic="0.0" midilearn="0.0"
+             envelopeeditordest1="0.0" envelopeeditorspeed="0.0" envelopeeditoramount="0.0"
+             envelopeOneShot="0.0" envelopefixtempo="0.0" envelopereset="0.0"
+             filterdrive="0.0" delaywet="0.0" delaytime="0.5" delaysync="0.0"
+             delayfactorl="0.0" delayfactorR="0.0" delayhighshelf="0.0" delaylowshelf="0.0"
+             delayfeedback="0.5" midiclear="0.0" midilock="0.0">
+      <splinePoints>
+        <splinePoint isStartPoint="1" isEndPoint="0" centerPointX="0.0" centerPointY="0.5"
+                     controlPointLeftX="0.0" controlPointLeftY="0.5" controlPointRightX="0.1000000014901161"
+                     controlPointRightY="0.5"/>
+        <splinePoint isStartPoint="0" isEndPoint="1" centerPointX="1.0" centerPointY="0.5"
+                     controlPointLeftX="0.8999999761581421" controlPointLeftY="0.5"
+                     controlPointRightX="1.0" controlPointRightY="0.5"/>
+      </splinePoints>
+    </program>
+  </programs>
+  <midimap/>
+</tal>

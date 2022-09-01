@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tal curprogram="0" version="1.7" presetName="PD Padwobbler FN" path="Factory Presets/PAD/PD Padwobbler FN.noisemakerpreset">
+  <programs>
+    <program programname="PD Padwobbler FN" unknown="0.5" volume="0.4320000112056732"
+             filtertype="0.0" cutoff="0.3360000252723694" resonance="0.0"
+             keyfollow="0.0" filtercontour="0.8360000252723694" filterattack="0.6160000562667847"
+             filterdecay="0.3640000224113464" filtersustain="0.0" filterrelease="0.4600000083446503"
+             ampattack="0.6440000534057617" ampdecay="1.0" ampsustain="0.5960000157356262"
+             amprelease="0.5760000348091125" osc1volume="0.5120000243186951"
+             osc2volume="0.6720000505447388" osc3volume="0.0" oscmastertune="0.5"
+             osc1tune="0.5180000066757202" osc2tune="0.7600000500679016" osc1finetune="0.3480000197887421"
+             osc2finetune="0.6640000343322754" osc1waveform="0.5" osc2waveform="0.75"
+             oscsync="0.0" lfo1waveform="0.4440000355243683" lfo2waveform="0.0"
+             lfo1rate="0.8600000143051147" lfo2rate="0.4600000083446503" lfo1amount="0.7120000123977661"
+             lfo2amount="0.7880000472068787" lfo1destination="0.8571428656578064"
+             lfo2destination="0.1428571492433548" lfo1Phase="0.0" lfo2Phase="0.0"
+             osc2fm="0.3560000061988831" osc2phase="0.0" osc1pw="0.0" osc1phase="0.5"
+             transpose="0.2200000137090683" freeadattack="0.0" freeaddecay="0.7520000338554382"
+             freeadamount="0.6640000343322754" freeaddestination="0.800000011920929"
+             lfo1sync="0.0" lfo1keytrigger="1.0" lfo2sync="0.0" lfo2keytrigger="1.0"
+             portamento="0.0" portamentomode="0.0" voices="1.0" velocityvolume="0.0"
+             velocitycontour="0.0" velocityfilter="0.0" pitchwheelcutoff="0.2360000163316727"
+             pitchwheelpitch="0.0" ringmodulation="0.0" chorus1enable="1.0"
+             chorus2enable="1.0" reverbwet="0.5480000376701355" reverbdecay="0.4080000221729279"
+             reverbpredelay="0.3440000116825104" reverbhighcut="0.5200000405311584"
+             reverblowcut="1.0" oscbitcrusher="1.0" highpass="0.0" detune="0.0"
+             vintagenoise="0.0" panic="0.0" midilearn="0.0" envelopeeditordest1="0.0"
+             envelopeeditorspeed="0.0" envelopeeditoramount="0.0" envelopeOneShot="0.0"
+             envelopefixtempo="0.0" envelopereset="0.0" filterdrive="0.0"
+             delaywet="0.0" delaytime="0.5" delaysync="0.0" delayfactorl="0.0"
+             delayfactorR="0.0" delayhighshelf="0.0" delaylowshelf="0.0" delayfeedback="0.5"
+             midiclear="0.0" midilock="0.0">
+      <splinePoints>
+        <splinePoint isStartPoint="1" isEndPoint="0" centerPointX="0.0" centerPointY="0.5"
+                     controlPointLeftX="0.0" controlPointLeftY="0.5" controlPointRightX="0.1000000014901161"
+                     controlPointRightY="0.5"/>
+        <splinePoint isStartPoint="0" isEndPoint="1" centerPointX="1.0" centerPointY="0.5"
+                     controlPointLeftX="0.8999999761581421" controlPointLeftY="0.5"
+                     controlPointRightX="1.0" controlPointRightY="0.5"/>
+      </splinePoints>
+    </program>
+  </programs>
+  <midimap/>
+</tal>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tal curprogram="0" version="1.7" presetName="PD Bursting Pad TAL"
+     path="Factory Presets/PAD/PD Bursting Pad TAL.noisemakerpreset">
+  <programs>
+    <program programname="PD Bursting Pad TAL" unknown="0.5" volume="0.2160000056028366"
+             filtertype="0.4545454680919647" cutoff="0.2480000108480453" resonance="0.7520000338554382"
+             keyfollow="0.5640000104904175" filtercontour="0.8560000658035278"
+             filterattack="0.6160000562667847" filterdecay="0.6360000371932983"
+             filtersustain="0.0" filterrelease="0.7360000610351562" ampattack="0.5520000457763672"
+             ampdecay="0.0" ampsustain="1.0" amprelease="0.0" osc1volume="0.800000011920929"
+             osc2volume="0.812000036239624" osc3volume="0.812000036239624"
+             oscmastertune="0.5" osc1tune="0.25" osc2tune="0.6600000262260437"
+             osc1finetune="0.4600000083446503" osc2finetune="0.5920000076293945"
+             osc1waveform="0.0" osc2waveform="0.25" oscsync="1.0" lfo1waveform="0.0"
+             lfo2waveform="0.0" lfo1rate="0.1920000016689301" lfo2rate="0.5160000324249268"
+             lfo1amount="0.7000000476837158" lfo2amount="0.6160000562667847"
+             lfo1destination="0.2857142984867096" lfo2destination="0.4285714328289032"
+             lfo1Phase="0.0" lfo2Phase="0.0" osc2fm="0.0" osc2phase="0.0"
+             osc1pw="0.5" osc1phase="0.0" transpose="0.0" freeadattack="0.6600000262260437"
+             freeaddecay="0.7480000257492065" freeadamount="0.8280000686645508"
+             freeaddestination="0.4000000059604645" lfo1sync="0.0" lfo1keytrigger="0.0"
+             lfo2sync="0.0" lfo2keytrigger="1.0" portamento="0.0" portamentomode="0.5"
+             voices="0.4000000059604645" velocityvolume="0.0" velocitycontour="0.0"
+             velocityfilter="0.0" pitchwheelcutoff="0.0" pitchwheelpitch="0.1680000126361847"
+             ringmodulation="0.6920000314712524" chorus1enable="1.0" chorus2enable="0.0"
+             reverbwet="0.0" reverbdecay="0.7000000476837158" reverbpredelay="0.0"
+             reverbhighcut="0.0" reverblowcut="1.0" oscbitcrusher="1.0" highpass="0.9360000491142273"
+             detune="0.0" vintagenoise="0.0" panic="0.0" midilearn="0.0" envelopeeditordest1="0.0"
+             envelopeeditorspeed="0.0" envelopeeditoramount="0.0" envelopeOneShot="0.0"
+             envelopefixtempo="0.0" envelopereset="0.0" filterdrive="0.0"
+             delaywet="0.4440000355243683" delaytime="0.1880000084638596"
+             delaysync="0.0" delayfactorl="0.0" delayfactorR="0.0" delayhighshelf="0.0"
+             delaylowshelf="0.0" delayfeedback="0.1440000087022781" midiclear="0.0"
+             midilock="0.0">
+      <splinePoints>
+        <splinePoint isStartPoint="1" isEndPoint="0" centerPointX="0.0" centerPointY="0.5"
+                     controlPointLeftX="0.0" controlPointLeftY="0.5" controlPointRightX="0.1000000014901161"
+                     controlPointRightY="0.5"/>
+        <splinePoint isStartPoint="0" isEndPoint="1" centerPointX="1.0" centerPointY="0.5"
+                     controlPointLeftX="0.8999999761581421" controlPointLeftY="0.5"
+                     controlPointRightX="1.0" controlPointRightY="0.5"/>
+      </splinePoints>
+    </program>
+  </programs>
+  <midimap/>
+</tal>
