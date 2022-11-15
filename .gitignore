@@ -1,2 +1,8 @@
 resources/samples
 *.pptx
+src/punkt
+src/text-vad
+src/output.wav
+*.pdf
+*.png
+*.jpg
