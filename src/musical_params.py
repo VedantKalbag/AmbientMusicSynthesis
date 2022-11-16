@@ -132,7 +132,7 @@ def get_octaves(sequence, initial_state=3, seed="NA", transition_probs=[0.3,0.5,
 def get_chord_and_metadata(total_length, ending_chord_length, length_transition_matrix, starting_chord='C', starting_length="VL", starting_density=1, starting_octave=3, seed="NA"):
     # docstring for this function
     """Create a sequence of chords and get metadata to use for synthesis ."""
-    n_notes_to_generate = int(total_length/1)
+    n_notes_to_generate = int(total_length/2)
 
     chord_sequence = generate_sequence('C', n_notes_to_generate)
     lengths = get_length_sequence(starting_length, n_notes_to_generate,length_transition_matrix, seed)
@@ -148,7 +148,7 @@ def get_chord_and_metadata(total_length, ending_chord_length, length_transition_
 
 def main(tm):
     for i in range(50):
-        d=get_chord_and_metadata(360, 1, tm)
+        d=get_chord_and_metadata(500, 1, tm)
         # print(sum(d['durations']))
         # print(d)
         print("-------------------------------------------------")

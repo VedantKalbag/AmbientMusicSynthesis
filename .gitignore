@@ -6,3 +6,4 @@ src/output.wav
 *.pdf
 *.png
 *.jpg
+.vscode
