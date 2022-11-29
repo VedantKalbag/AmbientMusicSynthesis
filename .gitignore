@@ -7,3 +7,5 @@ src/output.wav
 *.png
 *.jpg
 .vscode
+*.pyc
+*.zip

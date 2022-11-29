@@ -1,7 +1,7 @@
 import os
 from icecream import ic
 ic.configureOutput(prefix='Debug | ')#, includeContext=True)
-ic.disable()
+# ic.disable()
 import numpy as np
 import pandas as pd
 import random as rm
@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 class MusicalParameters():
     def __init__(self, duration, ending_chord_min_length, starting_key, starting_length, starting_note_density, starting_octave, preset_dict):
-        self.__dict__ = preset_dict['default']
+        self.__dict__ = preset_dict['default'] # initialize based on first emotion segment 
         self.preset_dict = preset_dict
         self.preset_keys = list(preset_dict.keys())
         # ic(self.preset_dict)
@@ -241,7 +241,7 @@ class MusicalParameters():
                     pass
         # ic(nearest_chords)
         if nearest_chords == []:
-            ic("No nearest chord found")
+            # ic("No nearest chord found")
             # ic(self.key_type)
             # ic(self.current_key[:1])
             # ic(self.note_to_number(self.current_key[:1],self.current_octave))
@@ -270,11 +270,12 @@ class MusicalParameters():
             while (new_key == self.current_key):
                 new_key = np.random.choice(self.minor_key_transitions[self.current_key], p=self.key_transition_probability)
             self.current_key = new_key
-        
+        else:
+            ic("Current Key not found in major or minor key transitions")
         # TODO: get the 5 and root of the new key instead of finding nearest chord
         # Currently system will play just the root of the new key
         # ic(new_key)
-        new_key_root_midi = self.note_to_number(new_key[:1], self.current_octave)
+        new_key_root_midi = self.note_to_number(self.current_key[:1],self.current_octave)#self.note_to_number(new_key[:1], self.current_octave)
         if key_type == "major":
             chord = new_key_root_midi + self.get_major_intervals(self.current_note_density)
         elif key_type == "minor":
@@ -365,6 +366,11 @@ class MusicalParameters():
 
     def get_musical_parameters(self, mood_map={}):
         assert len(list(mood_map.keys())) >= 2, "Mood map should contain at least two timestamps and emotion segments"
+        assert int(list(mood_map.keys())[0]) == 0, "Mood map should start at 0 seconds"
+        assert int(list(mood_map.keys())[-1]) == self.desired_duration, "Mood map should end at the duration of the composition"
+        
+        # print(mood_map[list(mood_map.keys())[0]])
+        self._update_musical_parameters(mood_map[list(mood_map.keys())[0]])
 
         emotion_time_intervals = []
         l = list(mood_map.keys())
@@ -394,7 +400,7 @@ class MusicalParameters():
 
             # ic(self.__dict__)
             # ic(self.desired_duration)
-            while sum(time_interval_durations) < self.desired_duration:
+            while sum(time_interval_durations) < time_interval_duration:#self.desired_duration:
                 next_chord_duration = self.get_next_duration(self.current_duration, self.duration_transition_matrix)
                 num_notes = self.get_next_num_notes(self.current_note_density, self.note_density_transition_matrix)
                 octave = self.get_next_octave(self.current_octave, self.octave_transition_matrix)
@@ -407,15 +413,15 @@ class MusicalParameters():
                 if self.current_chord is not None:
                     # if using nearest chords, get nearest chord
                     if composition_type == 'nearest':
-                        ic('Using nearest chord method')
+                        # ic('Using nearest chord method')
                         # ic("Current chord: ", self.current_chord)
                         next_chord, nearest_chords = self.get_nearest_chord(self.current_chord)
                         # ic(next_chord)
                     # if using key change, get nearest chord in the new key by finding the new key from the circle of fifths 
                     # and evaluating the chord search space to find the nearest one
                     elif composition_type == 'circle_of_fifths':
-                        ic('Using circle of fifths')
-                        next_chord = self.key_change(self.current_chord, self.key_type) #TODO: implement this function
+                        # ic('Using circle of fifths')
+                        next_chord = self.key_change(self.current_chord, self.key_type) 
                         # ic(next_chord)
                 else:
                     new_key_root_midi = self.note_to_number(self.current_key, self.current_octave)
@@ -445,8 +451,12 @@ class MusicalParameters():
                 self.current_note_density = num_notes
                 self.current_octave = octave
                 self.current_chord = next_chord
-                
-
+            ic("------------------------------------------")
+            ic(len(time_interval_chords))
+            ic(len(time_interval_durations))
+            # processing to cut the last note to meet the interval duration
+            if sum(time_interval_durations) > time_interval_duration:
+                time_interval_durations[-1] = time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration)
 
             # Handling the case where the last note minimum duration is not met
             if sum(durations) > self.desired_duration: 
@@ -458,23 +468,25 @@ class MusicalParameters():
                 assert durations[-1] >= self.ending_chord_min_length
                 assert round(sum(durations),2) == self.desired_duration
             # ic(sum(time_interval_durations))
-
-            time_interval_chords = time_interval_chords[:len(durations)]
+            
+            # time_interval_chords = time_interval_chords[:len(durations)] # FIXME: This line isn't ensuring the lists are of the same length
+            ic(len(time_interval_durations) == len(time_interval_chords))
+            ic(len(time_interval_chords))
+            ic(len(time_interval_durations))
             # TODO: Consider scanning the end of the chord sequence and change the last chord to include a resolution
             chords.extend(time_interval_chords)
             durations.extend(time_interval_durations)
-            ic(chords)
-            ic(durations)
-
-
-            
-
+            ic(len(chords))
+            ic(len(durations))
+        ic(len(chords))
+        ic(len(durations))
+        assert len(chords) == len(durations)
         return {"chords": chords, "durations": durations}
 
 
 if __name__ == "__main__":
     mp = MusicalParameters(
-                        duration=30, 
+                        duration=90, 
                         ending_chord_min_length=2, 
                         starting_key='C', 
                         starting_length="VL", 
@@ -535,5 +547,6 @@ if __name__ == "__main__":
                                 }
                                     }
                             )
-    import timeit
-    print(timeit.timeit("""[mp.get_musical_parameters(mood_map={0.0:1, 10.5:2, 20:5}) for i in range(500)]""", setup="from __main__ import mp", number=1))
+    print(mp.get_musical_parameters(mood_map={0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1})) # TODO: there are no clean endpoints for the end of each section in terms of durations
+    # import timeit
+    # print(timeit.timeit("""[mp.get_musical_parameters(mood_map={0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}) for i in range(500)]""", setup="from __main__ import mp", number=1))

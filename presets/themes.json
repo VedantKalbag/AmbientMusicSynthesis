@@ -1,0 +1,26 @@
+{
+    "default":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    },
+    "minimal":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    },
+    "drone":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    },
+    "lush":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    },
+    "busy":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    },
+    "choir":{
+        "musical_params":"default",
+        "timbral_params":"default"
+    }
+}
