@@ -11,4 +11,4 @@ simpleaudio==1.0.4
 SoundFile==0.10.3.post1
 tqdm==4.64.1
 whitenoise==6.2.0
-zyne==1.0.0
+icecream==2.1.3
