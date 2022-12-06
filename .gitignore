@@ -13,4 +13,5 @@ src/output.wav
 *.egg-info
 *.wav
 .tox
-src/prototyping/*
+src/prototyping
+*cache*
