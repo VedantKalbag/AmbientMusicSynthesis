@@ -436,8 +436,22 @@ class MusicalParameters():
             # ic(len(time_interval_durations))
             # processing to cut the last note to meet the interval duration
             if sum(time_interval_durations) > time_interval_duration:
-                time_interval_durations[-1] = time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration)
-            ic(sum(durations))
+                ic("Cutting last note")
+                ic(time_interval[1], time_interval[0])
+                ic(time_interval_durations[-1])
+                # FIXME: This is causing durations less than 0.5s to occur, breaking the export
+                if np.round(time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration),2) >= self.ending_chord_min_length:
+                    time_interval_durations[-1] = time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration)
+                else:
+                    ic("Last note is too short, combining with previous note")
+                    time_interval_durations = time_interval_durations[:-1]
+                    time_interval_chords = time_interval_chords[:-1]
+                    # processing to combine the last two notes if they are too short
+                    time_interval_durations[-1] = time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration)
+                # time_interval_durations[-1] = np.round(time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration),2)
+                ic(time_interval_durations[-1])
+            ic(np.round(sum(durations),2))
+            
             # # Handling the case where the last note minimum duration is not met
             # if sum(durations) > self.desired_duration: 
             #     ic("============================================")
@@ -464,6 +478,9 @@ class MusicalParameters():
             # ic(len(durations))
         # ic(len(chords))
         # ic(len(durations))
+        for idx, dur in enumerate(durations):
+            if dur < 0.5:
+                ic(durations[idx], chords[idx])
         assert len(chords) == len(durations)
         ic("....................................................")
         ic('FINAL CHORDS AND DURATIONS CALCULATED')

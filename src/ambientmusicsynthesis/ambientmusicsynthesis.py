@@ -137,9 +137,11 @@ class AmbientMusicSynthesis():
             chords = chords[:-1]
         # ic(len(chords))
         # ic(len(durations))
+        self.chords=chords
+        self.durations=durations
         ic(sum(durations))
         for i in range(len(chords)):
-            ic(durations[i])
+            # ic(durations[i])
             for j in range(len(t_params[list(t_params.keys())[0]])):
                 params={}
                 for param in t_params.keys():
@@ -173,12 +175,17 @@ class AmbientMusicSynthesis():
         return self.audio#.realise(sample_rate)
     def export_audio(self, filename,audio=''):
         assert self.sample_rate in [8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000], "Sample rate must be one of the following: 8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000"
-        if audio == '':
-            self.audio.export(f"{filename}", sample_rate=self.sample_rate, max_amplitude=0.999)
-        else:
-            audio.export(filename, sample_rate=self.sample_rate, max_amplitude=0.999)
-        print("The audio has been exported to the file: ", filename)
-        print(f"The file took {timeit.default_timer()-self.start_time} seconds to generate")
+        try:
+            if audio == '':
+                self.audio.export(f"{filename}", sample_rate=self.sample_rate, max_amplitude=0.999)
+            else:
+                audio.export(filename, sample_rate=self.sample_rate, max_amplitude=0.999)
+            print("The audio has been exported to the file: ", filename)
+            print(f"The file took {timeit.default_timer()-self.start_time} seconds to generate")
+        except:
+            print("There was an error, please try again.")
+            ic(self.chords, self.durations)
+
 if __name__ == "__main__":
     import timeit
     starttime = timeit.default_timer()
