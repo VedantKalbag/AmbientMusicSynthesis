@@ -39,6 +39,7 @@ class AmbientMusicSynthesis():
         @param: emotion_timestamp_dict a dictionary containing keys as timestamps and values as emotion at the timestamp.
         @param: theme The theme for audio generation
         """
+        assert sample_rate in [8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000], "Sample rate must be one of the following: 8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000"
         self.start_time = timeit.default_timer()
         assert type(desired_duration) == type(list(emotion_timestamp_dict.keys())[-1]), "Duration must be an integer or float"
         # get user input
@@ -171,7 +172,7 @@ class AmbientMusicSynthesis():
         self.sample_rate = sample_rate
         return self.audio#.realise(sample_rate)
     def export_audio(self, filename,audio=''):
-        assert self.sample_rate in [8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000]
+        assert self.sample_rate in [8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000], "Sample rate must be one of the following: 8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000"
         if audio == '':
             self.audio.export(f"{filename}", sample_rate=self.sample_rate, max_amplitude=0.999)
         else:

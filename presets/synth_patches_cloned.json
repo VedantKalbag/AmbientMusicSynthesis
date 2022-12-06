@@ -1,0 +1,49 @@
+{
+    "mellow_o" : {
+                "lfo1_type": "na",
+                "lfo1_freq": 0, 
+                "lfo1_depth": 0.25,
+
+                "lfo2_type": "na",
+                "lfo2_freq": 0, 
+                "lfo2_depth": 0.5,
+                
+                "osc1_wave": "sawtooth",
+                "osc1_detune": 6,
+
+                "osc2_wave": "sawtooth",
+                "osc2_detune": 6,
+                "osc2_relative_shift": 2,
+
+                "n_voices": 2,
+
+                "sub_freq": 0,
+                "sub_wave": "sine",
+                "sub_detune": 30,
+
+                "hf_noise_type": "na", 
+
+                "lf_noise_type": "na",
+
+                "filter1_type": "lowpass",
+                "filter1_freq": 525,
+
+                "filter2_type": "highpass",
+                "filter2_freq": 200,
+
+                "filter3_type": "na",
+                "filter3_freq": 0,
+
+                "reverb": 0.5,
+
+                "vibrato_freq": 0,
+                "vibrato_depth": 0,
+
+                "attack": 780.0,
+                "decay": 0.05,
+                "sustain": 0.9,
+                "release": 4890.0
+
+                },
+    "":{}
+}
