@@ -11,3 +11,4 @@ src/output.wav
 *.zip
 .coverage
 *.egg-info
+*.wav
