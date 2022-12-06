@@ -9,3 +9,5 @@ src/output.wav
 .vscode
 *.pyc
 *.zip
+.coverage
+*.egg-info

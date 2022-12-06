@@ -1,0 +1,14 @@
+gensound==0.5.3
+librosa==0.9.2
+numpy==1.22.4
+pandas==1.4.4
+pedalboard==0.5.10
+PyAudio==0.2.12
+pytz==2022.2.1
+scikit-learn==1.1.2
+scipy==1.9.1
+simpleaudio==1.0.4
+SoundFile==0.10.3.post1
+tqdm==4.64.1
+whitenoise==6.2.0
+zyne==1.0.0
