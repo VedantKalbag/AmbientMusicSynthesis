@@ -1,7 +1,8 @@
 import os
 import json
+import timeit
 import numpy as np
-import synth
+import ambientmusicsynthesis.synth as synth
 import gensound
 from gensound.signals import Sine, Sawtooth, Square, Triangle, WhiteNoise, Silence, PinkNoise, Mix, WAV
 from gensound.effects import OneImpulseReverb, Vibrato
@@ -9,18 +10,19 @@ from gensound.filters import SimpleBandPass, SimpleHPF, SimpleLPF, SimpleHighShe
 from gensound.transforms import ADSR, Fade, Amplitude, CrossFade
 from gensound.curve import SineCurve, Line
 
-import musical_params_unified as musical_params
+import ambientmusicsynthesis.musical_params_unified as musical_params
 
 
 from icecream import ic
 ic.configureOutput(prefix='Debug | ')#, includeContext=True)
-ic.disable()
+# ic.disable()
 class AmbientMusicSynthesis():
     def __init__(self):
         # print(os.path.join(os.path.dirname(__file__),'..','presets','themes', 'musical_params.json'))
-        self.themes = json.load(open(os.path.join(os.path.dirname(__file__),'..','presets', 'themes.json')))
-        self.musical_params = json.load(open(os.path.join(os.path.dirname(__file__),'..','presets', 'musical_params.json')))
-        self.timbral_params = json.load(open(os.path.join(os.path.dirname(__file__),'..','presets', 'timbre.json')))
+        self.themes = json.load(open(os.path.join(os.path.dirname(__file__),'..','..','presets', 'themes.json')))
+        self.musical_params = json.load(open(os.path.join(os.path.dirname(__file__),'..','..','presets', 'musical_params.json')))
+        self.timbral_params = json.load(open(os.path.join(os.path.dirname(__file__),'..','..','presets', 'timbre.json')))
+        self.previous_params={}
     def interpolate_parameter(self, initial, final, num_steps, integer_output=False):
         """
         Interpolates between two values
@@ -37,6 +39,8 @@ class AmbientMusicSynthesis():
         @param: emotion_timestamp_dict a dictionary containing keys as timestamps and values as emotion at the timestamp.
         @param: theme The theme for audio generation
         """
+        self.start_time = timeit.default_timer()
+        assert type(desired_duration) == type(list(emotion_timestamp_dict.keys())[-1]), "Duration must be an integer or float"
         # get user input
         # get theme
         self._theme = self.themes[theme]
@@ -59,9 +63,9 @@ class AmbientMusicSynthesis():
                                 preset_dict = self.musical_params)
         d = self.mp.get_musical_parameters(emotion_timestamp_dict)
         chords, durations = d['chords'], d['durations']
-        ic(len(chords))
-        ic(len(durations))
-        ic(sum(durations))
+        # ic(len(chords))
+        # ic(len(durations))
+        # ic(sum(durations))
         
         # print(end)
         # interpolates between the consecutive parameters 
@@ -90,7 +94,7 @@ class AmbientMusicSynthesis():
                     break
             steps[interval] = end - start # FIXME: This value is occasionally higher than the true number by 1
             duration = list(interval)[1] - list(interval)[0]
-            ic(f"{start} - {end} - {steps[interval]} - {sum(durations[start:end])} - {duration}")
+            # ic(f"{start} - {end} - {steps[interval]} - {sum(durations[start:end])} - {duration}")
             start = end
             for param in self.timbral_params['default'].keys():
                 initial_param_value = self.timbral_params[str(emotion_intervals[interval][0])][param]
@@ -120,23 +124,35 @@ class AmbientMusicSynthesis():
         #     print(param, len(t_params[param]))
 
         # GENERATE AUDIO
-        ic("length of chords: ", len(chords))
-        ic("length of durations: ", len(durations))
-        ic(t_params[list(t_params.keys())[0]])
-        ic(len(t_params[list(t_params.keys())[0]]))
-        for i in range(len(t_params[list(t_params.keys())[0]])):
-            # print(i)
-            params={}
-            for param in t_params.keys():
-                # print(param,len(t_params[param]))
-                params[param] = t_params[param][i]
-            # print(params)
-            self.s = synth.Synth(params) # TODO: OPTIMISE BY CHECKING IF PARAMS ARE SAME AS PREVIOUS ITERATION
-            for i in range(len(chords)):
-                if i == 0:
-                    self.audio = gensound.mix([self.s.generate_audio(midi, durations[i]*1e3) for midi in chords[i]])
-                else:
-                    self.audio = self.audio | CrossFade(duration=0.5*1e3) | gensound.mix([self.s.generate_audio(midi, durations[i]*1e3) for midi in chords[i]])
+        assert len(chords) == len(durations), "Chords and durations must be of the same length"
+        assert np.round(sum(durations),2) == np.round(desired_duration,2), f"Sum of durations ({np.round(sum(durations),2)}) must equal desired duration ({np.round(desired_duration,2)})"
+        # ic("length of chords: ", len(chords))
+        # ic("length of durations: ", len(durations))
+        # ic(t_params[list(t_params.keys())[0]])
+        # ic(len(t_params[list(t_params.keys())[0]]))
+        if durations[-1] < 2:
+            durations[-2] += durations[-1]
+            durations = durations[:-1]
+            chords = chords[:-1]
+        # ic(len(chords))
+        # ic(len(durations))
+        ic(sum(durations))
+        for i in range(len(chords)):
+            ic(durations[i])
+            for j in range(len(t_params[list(t_params.keys())[0]])):
+                params={}
+                for param in t_params.keys():
+                    # print(param,len(t_params[param]))
+                    params[param] = t_params[param][j]
+                # print(params)
+                if self.previous_params != params:
+                    self.s = synth.Synth(params) 
+            if i == 0:
+                self.audio = gensound.mix([self.s.generate_audio(midi, np.round(durations[i],2)*1e3) for midi in chords[i]])
+            else:
+                self.audio = self.audio | CrossFade(duration=0.25*1e3) | Silence (duration=0.5*1e3) | CrossFade(duration=0.25*1e3) | gensound.mix([self.s.generate_audio(midi, np.round(durations[i],2)*1e3) for midi in chords[i]])
+                # self.audio = self.audio | gensound.mix([self.s.generate_audio(midi, np.round(durations[i],2)*1e3) for midi in chords[i]])
+            self.previous_params=params
             # if i == 0:
             #     ic(chords[i])
             #     audio = gensound.mix([self.s.generate_audio(midi, durations[i]) for midi in chords[i]])
@@ -152,12 +168,16 @@ class AmbientMusicSynthesis():
             #     # tmp = self.s.generate_audio(chords[i], durations[i]*1e3)
             #     ic(chords[i])
             #     audio = audio | gensound.mix([self.s.generate_audio(midi, durations[i]) for midi in chords[i]])#self.s.generate_audio(chords[i], durations[i]*1e3)
+        self.sample_rate = sample_rate
         return self.audio#.realise(sample_rate)
     def export_audio(self, filename,audio=''):
+        assert self.sample_rate in [8000, 11025, 16000, 22050, 24000, 32000, 44100, 48000, 96000]
         if audio == '':
-            self.audio.export(f"{filename}")
+            self.audio.export(f"{filename}", sample_rate=self.sample_rate, max_amplitude=0.999)
         else:
-            audio.export(filename)
+            audio.export(filename, sample_rate=self.sample_rate, max_amplitude=0.999)
+        print("The audio has been exported to the file: ", filename)
+        print(f"The file took {timeit.default_timer()-self.start_time} seconds to generate")
 if __name__ == "__main__":
     import timeit
     starttime = timeit.default_timer()

@@ -1,75 +1,27 @@
 import numpy as np
-import random as rm
-# note_durations = [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
-# The statespace
-states = ["VS","S","M","L","VL"]
-# Possible sequences of events
-transitionName = [["VSVS","VSS","VSM","VSL","VSVL"],["SVS","SS","SM","SL","SVL"],["MVS","MS","MM","ML","MVL"],["LVS","LS","LM","LL","LVL"],["VLVS","VLS","VLM","VLL","VLVL"]]
+interval = [1, 5, 8]
 
-# Probabilities matrix (transition matrix)
-#TODO: Load transition matrix, last_note_min_length from each theme
-transitionMatrix = np.array([
-                             [0.2,0.2,0.2,0.2,0.2],
-                             [0.2,0.2,0.2,0.2,0.2],
-                             [0.2,0.2,0.2,0.2,0.2],
-                             [0.2,0.2,0.2,0.2,0.2],
-                             [0.2,0.2,0.2,0.2,0.2]
-                             ])
-assert sum(transitionMatrix[0])==1
-assert sum(transitionMatrix[1])==1
-assert sum(transitionMatrix[2])==1
-assert sum(transitionMatrix[3])==1
-assert sum(transitionMatrix[4])==1
+def midi_to_note_name(midi):
+    """Convert midi note to note name."""
+    note_names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
+    # octave = (midi-21)//12
+    note = (midi-21)%12
+    return note#note_names[note]
 
+current_chord = [22,26,29]
 
-def get_length_sequence(initial_state, n_steps, seed="NA"):
-    sequence = [initial_state]
-    if seed != "NA":
-        np.random.seed(seed)
-    for i in range(n_steps-1):
-        transition_probs = transitionMatrix[states.index(sequence[-1])]
-        next_state = np.random.choice(states, p=transition_probs)
-        sequence.append(next_state)
-    return sequence
+current_chord=[midi_to_note_name(note) for note in current_chord]
+out=[]
+l=[]
+cols=[]
+note_rep=[]
+for root in range(21,108+1):
+    cols.append([root+i for i in interval]) # actual midi notes
+    note_rep.append(sorted([midi_to_note_name(root+i) for i in interval])) # sort the notes in a chord
 
-def get_durations(total_length, sequence, last_note_min_length=3):
-    length_reqd = total_length
-    durations = []
-    for i in range(len(sequence)):
-        if sum(durations) > total_length:
-            durations = durations[:-1]
-            durations.append(round(total_length-sum(durations),2))
-            if durations[-1] < last_note_min_length:
-                durations[-2] += durations[-1]
-                durations=durations[:-1]
-            assert durations[-1] >= last_note_min_length
-            assert sum(durations) == total_length
-            l = len(durations)
-            return durations
-            
-        if i == len(sequence)-1:
-            if length_reqd < last_note_min_length:
-                durations.append(length_reqd)
-                break
-        if sequence[i] == "VS":
-            durations.append(round(rm.uniform(0.5,1),2))
-        elif sequence[i] == "S":
-            durations.append(round(rm.uniform(1,2),2))
-        elif sequence[i] == "M":
-            durations.append(round(rm.uniform(2,3),2))
-        elif sequence[i] == "L":
-            durations.append(round(rm.uniform(3,5),2))
-        elif sequence[i] == "VL":
-            durations.append(round(rm.uniform(5,8),2))
-        length_reqd -= durations[i]
-    l = len(durations)
-    assert durations[-1] >= last_note_min_length
-    assert sum(durations) == total_length
-    return durations
+for i in range(len(current_chord)):
+    chord_cmp = np.roll(np.array(note_rep),i,axis=1) - sorted(current_chord) # circular shift the note representation of the chords
+    idx = np.count_nonzero(chord_cmp,axis=1) == len(current_chord)-1 # find the index of the chord that has the same notes as the current chord, except for one
+    out.append(np.array(cols)[idx])
+    l.append(np.array(note_rep)[idx])
 
-def main():
-    for i in range(20):
-        print(get_durations(20,get_length_sequence("VL",20),2))
-
-if __name__ == "__main__":
-    main()

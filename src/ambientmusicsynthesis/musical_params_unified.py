@@ -151,26 +151,34 @@ class MusicalParameters():
         return np.append(major_chords, minor_chords, axis=0)
 
     def number_to_note(self, number: int) -> tuple:
-        octave = number // self.NOTES_IN_OCTAVE
-        # assert octave in OCTAVES
-        # assert 0 <= number <= 127
+        assert 0 <= number <= 127, "MIDI note number must be between 0 and 127"
+
+        octave = (number // self.NOTES_IN_OCTAVE)-1
+        assert octave in self.OCTAVES
+        
         note = self.NOTES[number % self.NOTES_IN_OCTAVE]
 
         return number % self.NOTES_IN_OCTAVE, note, octave # Note number (0-11), note name, octave
 
     def note_to_number(self,note: str, octave: int) -> int:
         assert note in self.NOTES
-        # assert octave in OCTAVES
+        assert octave in self.OCTAVES
 
         note = self.NOTES.index(note)
-        note += (self.NOTES_IN_OCTAVE * octave)
+        note += (self.NOTES_IN_OCTAVE * (octave+1))
 
-        # assert 0 <= note <= 127
+        assert 0 <= note <= 127
 
         return note
 
     def flatten(self,l):
-        return [item for sublist in l for item in sublist]
+        out=[]
+        for item in l:
+            if type(item) == list:
+                out.extend(self.flatten(item))
+            else:
+                out.append(item) 
+        return out
 
     def get_next_length(self, current_state, transition_matrix):
         return np.random.choice(self.length_states, p=transition_matrix[self.length_states.index(current_state)])
@@ -265,6 +273,11 @@ class MusicalParameters():
             while (new_key == self.current_key):
                 new_key = np.random.choice(self.major_key_transitions[self.current_key], p=self.key_transition_probability)
             self.current_key = new_key
+        elif (self.current_key+"m" in list(self.minor_key_transitions.keys())[:12]):
+            new_key = np.random.choice(self.minor_key_transitions[self.current_key+'m'], p=self.key_transition_probability)
+            while (new_key == self.current_key):
+                new_key = np.random.choice(self.minor_key_transitions[self.current_key+'m'], p=self.key_transition_probability)
+            self.current_key = new_key
         elif self.current_key in list(self.minor_key_transitions.keys())[:12]:
             new_key = np.random.choice(self.minor_key_transitions[self.current_key], p=self.key_transition_probability)
             while (new_key == self.current_key):
@@ -272,6 +285,7 @@ class MusicalParameters():
             self.current_key = new_key
         else:
             ic("Current Key not found in major or minor key transitions")
+            ic(self.current_key)
         # TODO: get the 5 and root of the new key instead of finding nearest chord
         # Currently system will play just the root of the new key
         # ic(new_key)
@@ -367,7 +381,7 @@ class MusicalParameters():
     def get_musical_parameters(self, mood_map={}):
         assert len(list(mood_map.keys())) >= 2, "Mood map should contain at least two timestamps and emotion segments"
         assert int(list(mood_map.keys())[0]) == 0, "Mood map should start at 0 seconds"
-        assert int(list(mood_map.keys())[-1]) == self.desired_duration, "Mood map should end at the duration of the composition"
+        assert np.round(float(list(mood_map.keys())[-1]),2) == np.round(self.desired_duration,2), "Mood map should end at the duration of the composition"
         
         # print(mood_map[list(mood_map.keys())[0]])
         self._update_musical_parameters(mood_map[list(mood_map.keys())[0]])
@@ -439,7 +453,10 @@ class MusicalParameters():
                 # if current time (calculated by sum of durations) is in range(time_interval[1] - time_interval[0]) then find the segment associated with time_interval[1]
                 # if current time is more than halfway through the range, perform musical parameter update
                 current_time = sum(time_interval_durations)
-                if current_time > time_interval[0] + 0.66*(time_interval_duration):
+                # ic(time_interval)
+                # ic(current_time)
+                # ic(time_interval[0] + 0.66*(time_interval_duration))
+                if current_time > 0.66*(time_interval_duration):
                     try:
                         next_emotion_segment = mood_map[time_interval[1]]
                     except:
@@ -452,35 +469,46 @@ class MusicalParameters():
                 self.current_octave = octave
                 self.current_chord = next_chord
             ic("------------------------------------------")
-            ic(len(time_interval_chords))
-            ic(len(time_interval_durations))
+            # ic(len(time_interval_chords))
+            # ic(len(time_interval_durations))
             # processing to cut the last note to meet the interval duration
             if sum(time_interval_durations) > time_interval_duration:
                 time_interval_durations[-1] = time_interval_durations[-1] - (sum(time_interval_durations) - time_interval_duration)
-
-            # Handling the case where the last note minimum duration is not met
-            if sum(durations) > self.desired_duration: 
-                durations = durations[:-1]
-                durations.append(round(self.desired_duration-sum(durations),2))
-                while durations[-1] < self.ending_chord_min_length:
-                    durations[-2] += durations[-1]
-                    durations=durations[:-1]
-                assert durations[-1] >= self.ending_chord_min_length
-                assert round(sum(durations),2) == self.desired_duration
-            # ic(sum(time_interval_durations))
+            ic(sum(durations))
+            # # Handling the case where the last note minimum duration is not met
+            # if sum(durations) > self.desired_duration: 
+            #     ic("============================================")
+            #     # ic(sum(durations))
+            #     durations = durations[:-1]
+            #     durations.append(round(self.desired_duration-sum(durations),2))
+            #     while durations[-1] < self.ending_chord_min_length:
+            #         durations[-2] += durations[-1]
+            #         durations=durations[:-1]
+            #     assert durations[-1] >= self.ending_chord_min_length
+            #     assert round(sum(durations),2) == self.desired_duration
+            #     # ic(sum(durations))
+            # # ic(sum(time_interval_durations))
             
-            # time_interval_chords = time_interval_chords[:len(durations)] # FIXME: This line isn't ensuring the lists are of the same length
-            ic(len(time_interval_durations) == len(time_interval_chords))
-            ic(len(time_interval_chords))
-            ic(len(time_interval_durations))
+            # time_interval_chords = time_interval_chords[:len(durations)]
+            # ic(len(time_interval_durations) == len(time_interval_chords))
+            # ic(len(time_interval_chords))
+            # ic(len(time_interval_durations))
+
             # TODO: Consider scanning the end of the chord sequence and change the last chord to include a resolution
             chords.extend(time_interval_chords)
             durations.extend(time_interval_durations)
-            ic(len(chords))
-            ic(len(durations))
-        ic(len(chords))
-        ic(len(durations))
+            # ic(len(chords))
+            # ic(len(durations))
+        # ic(len(chords))
+        # ic(len(durations))
         assert len(chords) == len(durations)
+        ic("....................................................")
+        ic('FINAL CHORDS AND DURATIONS CALCULATED')
+        ic("....................................................")
+        ic(sum(durations))
+        ic(list(mood_map.keys())[-1])
+        # ic(durations)
+        assert np.round(sum(durations),2) == np.round(list(mood_map.keys())[-1],2)
         return {"chords": chords, "durations": durations}
 
 
