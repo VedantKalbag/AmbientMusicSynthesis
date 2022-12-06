@@ -21,7 +21,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        sudo apt-get install portaudio19-dev python-pyaudio python3-pyaudio
+        sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+        sudo apt-get install ffmpeg libav-tools
+        sudo pip install pyaudio
         pip install --user pytest pipwin
         pip install --user --upgrade setuptools
         pip install --user -r requirements.txt
