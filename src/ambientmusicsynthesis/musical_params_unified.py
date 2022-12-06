@@ -114,30 +114,28 @@ class MusicalParameters():
         return np.append(major_roots, minor_roots)
 
     def get_major_intervals(self,num_notes):
-        match num_notes:
-            case 1:
-                return np.array(rm.choice([[1],[5]])) # root or fifth
-            case 2:
-                return np.array([1,8]) # root,fifth
-            case 3:
-                return np.array([1,5,8]) # root, third, fifth
-            case 4:
-                return np.array([1,5,8,13]) # root, third, fifth, octave
-            case 5:
-                return np.array([1,5,8,13,rm.choice([20,-4])]) # root, third, fifth, octave, fifth of higher/lower octave
+        if num_notes == 1:
+            return np.array(rm.choice([[1],[5]])) # root or fifth
+        if num_notes == 2:
+            return np.array([1,8]) # root,fifth
+        if num_notes == 3:
+            return np.array([1,5,8]) # root, third, fifth
+        if num_notes == 4:
+            return np.array([1,5,8,13]) # root, third, fifth, octave
+        if num_notes == 5:
+            return np.array([1,5,8,13,rm.choice([20,-4])]) # root, third, fifth, octave, fifth of higher/lower octave
 
     def get_minor_intervals(self,num_notes):
-        match num_notes:
-            case 1:
-                return np.array(rm.choice([[1],[4]])) # root or fifth
-            case 2:
-                return np.array([1,8]) # root,fifth
-            case 3:
-                return np.array([1,4,8]) # root, third, fifth
-            case 4:
-                return np.array([1,4,8,13]) # root, third, fifth, octave
-            case 5:
-                return np.array([1,4,8,13,rm.choice([20,-4])]) # root, third, fifth, octave, fifth of higher/lower octave
+        if num_notes == 1:
+            return np.array(rm.choice([[1],[4]])) # root or fifth
+        if num_notes == 2:
+            return np.array([1,8]) # root,fifth
+        if num_notes == 3:
+            return np.array([1,4,8]) # root, third, fifth
+        if num_notes == 4:
+            return np.array([1,4,8,13]) # root, third, fifth, octave
+        if num_notes == 5:
+            return np.array([1,4,8,13,rm.choice([20,-4])]) # root, third, fifth, octave, fifth of higher/lower octave
 
     def get_chord_search_space(self,midi_note, num_notes=3):
         roots = self.get_roots_search_space(midi_note)
@@ -200,17 +198,16 @@ class MusicalParameters():
         next_length = self.get_next_length(current_length, transition_matrix)
 
         assert next_length in ["VS","S","M","L","VL"]
-        match next_length:
-            case "VS":
-                return round(rm.uniform(0.5,1),2)
-            case "S":
-                return round(rm.uniform(1,2),2)
-            case "M":
-                return round(rm.uniform(2,3),2)
-            case "L":
-                return round(rm.uniform(3,5),2)
-            case "VL":
-                return round(rm.uniform(5,8),2)
+        if next_length == "VS":
+            return round(rm.uniform(0.5,1),2)
+        if next_length == "S":
+            return round(rm.uniform(1,2),2)
+        if next_length == "M":
+            return round(rm.uniform(2,3),2)
+        if next_length == "L":
+            return round(rm.uniform(3,5),2)
+        if next_length == "VL":
+            return round(rm.uniform(5,8),2)
 
     def get_next_num_notes(self, current_num_notes, num_notes_transition_matrix):
         return np.random.choice([1,2,3,4,5], p=num_notes_transition_matrix[current_num_notes-1])
@@ -227,13 +224,12 @@ class MusicalParameters():
         # ic(len(current_chord), self.current_note_density)
         if len(sorted_current_chord) != self.current_note_density:
             # ic("Length mismatch")
-            match self.key_type:
-                case "major":
-                    # ic("Major root: ", current_chord[0] + self.get_major_intervals(self.current_note_density))
-                    return current_chord[0] + self.get_major_intervals(self.current_note_density), np.array(current_chord[0] + self.get_major_intervals(self.current_note_density))
-                case "minor":
-                    # ic("Minor root: ",current_chord[0] + self.get_minor_intervals(self.current_note_density))
-                    return current_chord[0] + self.get_minor_intervals(self.current_note_density), np.array(current_chord[0] + self.get_minor_intervals(self.current_note_density))
+            if self.key_type == "major":
+                # ic("Major root: ", current_chord[0] + self.get_major_intervals(self.current_note_density))
+                return current_chord[0] + self.get_major_intervals(self.current_note_density), np.array(current_chord[0] + self.get_major_intervals(self.current_note_density))
+            if self.key_type == "minor":
+                # ic("Minor root: ",current_chord[0] + self.get_minor_intervals(self.current_note_density))
+                return current_chord[0] + self.get_minor_intervals(self.current_note_density), np.array(current_chord[0] + self.get_minor_intervals(self.current_note_density))
         
         for chord in self.get_chord_search_space(current_chord[0]):
             possible_chords.append([self.number_to_note(note)[0] for note in chord])
@@ -253,13 +249,12 @@ class MusicalParameters():
             # ic(self.key_type)
             # ic(self.current_key[:1])
             # ic(self.note_to_number(self.current_key[:1],self.current_octave))
-            match self.key_type:
-                case 'major':
-                    # ic(self.note_to_number(self.current_key,self.current_octave) + self.get_major_intervals(len(current_chord)))
-                    nearest_chords.append(self.note_to_number(self.current_key[:1],self.current_octave) + self.get_major_intervals(len(current_chord)))
-                case 'minor':
-                    # ic(self.note_to_number(self.current_key,self.current_octave) + self.get_minor_intervals(len(current_chord)))
-                    nearest_chords.append(self.note_to_number(self.current_key[:1],self.current_octave) + self.get_minor_intervals(len(current_chord)))
+            if self.key_type == 'major':
+                # ic(self.note_to_number(self.current_key,self.current_octave) + self.get_major_intervals(len(current_chord)))
+                nearest_chords.append(self.note_to_number(self.current_key[:1],self.current_octave) + self.get_major_intervals(len(current_chord)))
+            if self.key_type == 'minor':
+                # ic(self.note_to_number(self.current_key,self.current_octave) + self.get_minor_intervals(len(current_chord)))
+                nearest_chords.append(self.note_to_number(self.current_key[:1],self.current_octave) + self.get_minor_intervals(len(current_chord)))
         ic(nearest_chords)
         return rm.choice(nearest_chords), np.array(nearest_chords)
 
@@ -313,69 +308,37 @@ class MusicalParameters():
     
     def _update_musical_parameters(self, emotion_segment):
         # TODO: create these parameter dicts
-        # ic(self.__dict__)
-        match emotion_segment:
-            # load from musical parameters json
-            case 1:
-                # ic(self.preset_dict["1"])
-                # self.__dict__ = self.preset_dict["1"]
-                for key in self.preset_dict["1"].keys():
-                    self.__dict__[key] = self.preset_dict["1"][key]
-                # self.__dict__ = {
-                #     "composition_probabilities" : np.array([]),
-                #     "key_transition_probability" : np.array([]),
-                #     "key_type" : "",
-                #     "note_density_transition_matrix" : np.array([]),
-                #     "octave_transition_matrix" : np.array([])
-                # }
-            case 2:
-                # ic(self.preset_dict["2"])
-                # self.__dict__ = self.preset_dict["2"]
-                for key in self.preset_dict["2"].keys():
-                    self.__dict__[key] = self.preset_dict["2"][key]
-                # self.__dict__ = {
-                #     "composition_probabilities" : np.array([]),
-                #     "key_transition_probability" : np.array([]),
-                #     "key_type" : "",
-                #     "note_density_transition_matrix" : np.array([]),
-                #     "octave_transition_matrix" : np.array([])
-                # }
-            case 3:
-                # ic(self.preset_dict["3"])
-                # self.__dict__ = self.preset_dict["3"]
-                for key in self.preset_dict["3"].keys():
-                    self.__dict__[key] = self.preset_dict["3"][key]
-                # self.__dict__ = {
-                #     "composition_probabilities" : np.array([]),
-                #     "key_transition_probability" : np.array([]),
-                #     "key_type" : "",
-                #     "note_density_transition_matrix" : np.array([]),
-                #     "octave_transition_matrix" : np.array([])
-                # }
-            case 4:
-                # ic(self.preset_dict["4"])
-                # self.__dict__ = self.preset_dict["4"]
-                for key in self.preset_dict["4"].keys():
-                    self.__dict__[key] = self.preset_dict["4"][key]
-                # self.__dict__ = {
-                #     "composition_probabilities" : np.array([]),
-                #     "key_transition_probability" : np.array([]),
-                #     "key_type" : "",
-                #     "note_density_transition_matrix" : np.array([]),
-                #     "octave_transition_matrix" : np.array([])
-                # }
-            case 5:
-                # ic(self.preset_dict["5"])
-                # self.__dict__ = self.preset_dict["5"]
-                for key in self.preset_dict["5"].keys():
-                    self.__dict__[key] = self.preset_dict["5"][key]
-                # self.__dict__ = {
-                #     "composition_probabilities" : np.array([]),
-                #     "key_transition_probability" : np.array([]),
-                #     "key_type" : "",
-                #     "note_density_transition_matrix" : np.array([]),
-                #     "octave_transition_matrix" : np.array([])
-                # }
+        # load from musical parameters json
+        if emotion_segment == 1:
+            # ic(self.preset_dict["1"])
+            # self.__dict__ = self.preset_dict["1"]
+            for key in self.preset_dict["1"].keys():
+                self.__dict__[key] = self.preset_dict["1"][key]
+            
+        if emotion_segment == 2:
+            # ic(self.preset_dict["2"])
+            # self.__dict__ = self.preset_dict["2"]
+            for key in self.preset_dict["2"].keys():
+                self.__dict__[key] = self.preset_dict["2"][key]
+            
+        if emotion_segment == 3:
+            # ic(self.preset_dict["3"])
+            # self.__dict__ = self.preset_dict["3"]
+            for key in self.preset_dict["3"].keys():
+                self.__dict__[key] = self.preset_dict["3"][key]
+            
+        if emotion_segment == 4:
+            # ic(self.preset_dict["4"])
+            # self.__dict__ = self.preset_dict["4"]
+            for key in self.preset_dict["4"].keys():
+                self.__dict__[key] = self.preset_dict["4"][key]
+            
+        if emotion_segment == 5:
+            # ic(self.preset_dict["5"])
+            # self.__dict__ = self.preset_dict["5"]
+            for key in self.preset_dict["5"].keys():
+                self.__dict__[key] = self.preset_dict["5"][key]
+            
         return
 
     def get_musical_parameters(self, mood_map={}):

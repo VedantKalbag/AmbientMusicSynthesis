@@ -29,17 +29,16 @@ class Synth():
             if self.__dict__[filter_number+'_type'] == 'na':
                 self.__dict__[filter_number] = None
             else:
-                match self.__dict__[filter_number+'_type']:
-                    case 'lowpass':
-                        self.__dict__[filter_number] = SimpleLPF
-                    case 'highpass':
-                        self.__dict__[filter_number] = SimpleHPF
-                    case 'bandpass':
-                        self.__dict__[filter_number] = SimpleBandPass
-                    case 'lowshelf':
-                        self.__dict__[filter_number] = SimpleLowShelf
-                    case 'highshelf':
-                        self.__dict__[filter_number] = SimpleHighShelf
+                if self.__dict__[filter_number+'_type'] == 'lowpass':
+                    self.__dict__[filter_number] = SimpleLPF
+                if self.__dict__[filter_number+'_type'] == 'highpass':
+                    self.__dict__[filter_number] = SimpleHPF
+                if self.__dict__[filter_number+'_type'] == 'bandpass':
+                    self.__dict__[filter_number] = SimpleBandPass
+                if self.__dict__[filter_number+'_type'] == 'lowshelf':
+                    self.__dict__[filter_number] = SimpleLowShelf
+                if self.__dict__[filter_number+'_type'] == 'highshelf':
+                    self.__dict__[filter_number] = SimpleHighShelf
                 # self.__dict__[filter_number] = f(self.__dict__[filter_number+'_freq'])
     # def _setparam(self, param, value):
     #     setattr(self, param, value)
@@ -94,15 +93,14 @@ class Synth():
         detune_range = freq * int(detune_pct)/100
         all_cents = [i*detune_range/n_voices - detune_range/2 for i in range(n_voices)] # how much to detune each signal in the array
         # print(isinstance(pitch, str))
-        match wave_type: # REQUIRES PYTHON 3.10
-            case 'sine':
-                f = Sine
-            case 'square':
-                f = Square
-            case 'triangle':
-                f = Triangle
-            case 'sawtooth':
-                f = Sawtooth
+        if wave_type ==  'sine':
+            f = Sine
+        if wave_type ==  'square':
+            f = Square
+        if wave_type == 'triangle':
+            f = Triangle
+        if wave_type == 'sawtooth':
+            f = Sawtooth
         return gensound.mix([f(self.shift_freq_by_cents(freq*relative_shift,cents),duration) for cents in all_cents])
     
     def generate_audio(self, midi_number,duration): # TODO: change pitch to midi number
