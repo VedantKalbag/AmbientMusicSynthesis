@@ -21,10 +21,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pipwin
-        pip install --upgrade setuptools
-        pip install -r requirements.txt
-        pip install -r requirements_dev.txt
+        pip install --user pytest pipwin
+        pip install --user --upgrade setuptools
+        pip install --user -r requirements.txt
+        pip install --user -r requirements_dev.txt
     - name: Test with pytest
       run: |
         pytest
