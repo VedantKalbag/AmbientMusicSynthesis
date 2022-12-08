@@ -45,6 +45,8 @@ def test_generate_audio_with_invalid_duration(duration):
     with pytest.raises(AssertionError):
         ams.generate_audio(duration, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 44100)
 
+# TODO: write test to ensure that the keys in the dict are all in ascending order
+
 @pytest.mark.parametrize("duration, mood_map", [
     (45, {0.0:1, 20.3:2, 47:3}),
     (45, {0.0:1, 20.3:2, 44:3}),
@@ -138,11 +140,13 @@ def test_list_flatten(musical_parameters):
     assert musical_parameters.flatten([1,[2,3],[4,[5,[6]]]]) == [1,2,3,4,5,6]
 
 @pytest.mark.skip(reason="To implement") # TODO: Implement this test
-@pytest.mark.parametrize("chord, expected_chords", [
-    ([60, 64, 67], [[69,72,76], [65,72,76], [69,72,76], [69,72,76]])
+@pytest.mark.parametrize("chord", [
+    ([60, 64, 67]),
+    ([60, 64, 67, 70])
 ])
 def test_get_nearest_chord(chord, expected_chords, musical_parameters):
     selected_chord,chords = musical_parameters.get_nearest_chord(chord)
+    # TODO: CHECK THT EVERY CHORD IN CHORDS IS DIFFERENT IN ONLY 1 SPOT, AND THE OTHER LEN-1 SPOTS ARE THE SAME
     print(chords)
     # assert chords == expected_chords
     assert selected_chord in expected_chords
