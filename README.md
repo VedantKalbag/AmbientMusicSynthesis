@@ -10,7 +10,7 @@ The input to the system is a dictionary mapping of the various segments desired 
 
 ## Example Usage
 1. Clone this repository using ``` git clone https://github.com/VedantKalbag/AmbientMusicSynthesis.git```
-2. Open the folder and run ```pip install -e .``` to make the folder executable (this will be simplified in a future release)
+2. Open the folder and run ```pip install -e .``` to make the folder importable (this will be simplified in a future release)
 
 3. The library can be used as shown below:
 ```
