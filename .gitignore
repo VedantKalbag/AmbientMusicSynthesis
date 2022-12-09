@@ -3,7 +3,7 @@ resources/samples
 src/punkt
 src/text-vad
 src/output.wav
-*.pdf
+media
 *.png
 *.jpg
 .vscode
