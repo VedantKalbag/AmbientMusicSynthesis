@@ -27,32 +27,32 @@ class Synth():
         self.NOTES_SHARP = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         self.filters={}
         for filter_number in ['filter1','filter2','filter3']:
-            print(f"processing filter number {filter_number}")
+            # print(f"processing filter number {filter_number}")
             if self.__dict__[filter_number+'_type'] == 'na':
                 # self.__dict__[filter_number] = None
                 self.filters[filter_number] = None
-                print(f"There is no filter applied for filter number {filter_number}")
+                # print(f"There is no filter applied for filter number {filter_number}")
             else:
                 if self.__dict__[filter_number+'_type'] == 'lowpass':
                     # self.__dict__[filter_number] = SimpleLPF
                     self.filters[filter_number] = SimpleLPF
-                    print(f"Filter number {filter_number} is lowpass")
+                    # print(f"Filter number {filter_number} is lowpass")
                 if self.__dict__[filter_number+'_type'] == 'highpass':
                     # self.__dict__[filter_number] = SimpleHPF
                     self.filters[filter_number] = SimpleHPF
-                    print(f"Filter number {filter_number} is highpass")
+                    # print(f"Filter number {filter_number} is highpass")
                 if self.__dict__[filter_number+'_type'] == 'bandpass':
                     # self.__dict__[filter_number] = SimpleBandPass
                     self.filters[filter_number] = SimpleBandPass
-                    print(f"Filter number {filter_number} is bandpass")
+                    # print(f"Filter number {filter_number} is bandpass")
                 if self.__dict__[filter_number+'_type'] == 'lowshelf':
                     # self.__dict__[filter_number] = SimpleLowShelf
                     self.filters[filter_number] = SimpleLowShelf
-                    print(f"Filter number {filter_number} is lowshelf")
+                    # print(f"Filter number {filter_number} is lowshelf")
                 if self.__dict__[filter_number+'_type'] == 'highshelf':
                     # self.__dict__[filter_number] = SimpleHighShelf
                     self.filters[filter_number] = SimpleHighShelf
-                    print(f"Filter number {filter_number} is highshelf")
+                    # print(f"Filter number {filter_number} is highshelf")
                 # self.__dict__[filter_number] = f(self.__dict__[filter_number+'_freq'])
     # def _setparam(self, param, value):
     #     setattr(self, param, value)
@@ -129,7 +129,7 @@ class Synth():
         #     self.lfo2 = Amplitude(Constant(1, duration=duration))
 
         # 2 oscillators for the main sound
-        self.osc1 = self.detuned_voices(midi_number, relative_shift=0, duration=duration,detune_pct = self.osc1_detune, n_voices = self.n_voices, wave_type=self.osc1_wave)
+        self.osc1 = self.detuned_voices(midi_number, relative_shift=1, duration=duration,detune_pct = self.osc1_detune, n_voices = self.n_voices, wave_type=self.osc1_wave)
         self.osc2 = self.detuned_voices(midi_number, relative_shift=self.osc2_relative_shift, duration=duration,detune_pct = self.osc2_detune, n_voices = self.n_voices, wave_type=self.osc2_wave)
         # 1 oscillator for the sub bass
         if self.sub_freq != 0:

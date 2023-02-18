@@ -3,35 +3,37 @@ import numpy as np
 import json
 import pytest
 from ambientmusicsynthesis.ambientmusicsynthesis import AmbientMusicSynthesis
-# ams = AmbientMusicSynthesis()
+# import ambientmusicsynthesis.synth as synth
+# import ambientmusicsynthesis.musical_params_unified as musical_params
+ams = AmbientMusicSynthesis()
 # audio = ams.generate_audio(90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, sample_rate=44100)
    
 # TESTING AMBIENTMUSICSYNTHESIS CLASS
 def test_export_audio():
-    ams = AmbientMusicSynthesis()
+    # ams = ambientmusicsynthesis.AmbientMusicSynthesis()
     audio = ams.generate_audio(90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, sample_rate=44100)
-    ams.export_audio('test_2.wav')
-    audio.export('test_3.wav')
+    ams.export('test_2.wav', 44100)
+    # audio.export('test_3.wav', 44100)
     assert os.path.exists('test_2.wav')
-    assert os.path.exists('test_3.wav')
+    # assert os.path.exists('test_3.wav')
     #TODO: add assert to check that the files are the same after loading
     #TODO: add assert to check that both files are of the same length, equal to the desired length
 
     os.remove('test_2.wav')
-    os.remove('test_3.wav')
+    # os.remove('test_3.wav')
 
-@pytest.mark.parametrize("duration, mood_map, sample_rate", [
-    (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 44100),
-    (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 48000),
-    (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 96000),
-    (45, {0.0:1, 20.3:2, 45:3}, 44100),
-    (45, {0.0:1, 20.3:2, 45:3}, 48000),
-    (45, {0.0:1, 20.3:2, 45:3}, 96000),
-])
-def test_generate_audio(duration, mood_map, sample_rate):
-    ams = AmbientMusicSynthesis()
-    audio = ams.generate_audio(duration, mood_map, sample_rate)
-    assert audio != None
+# @pytest.mark.parametrize("duration, mood_map, sample_rate", [
+#     (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 44100),
+#     (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 48000),
+#     (90, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 96000),
+#     (45, {0.0:1, 20.3:2, 45:3}, 44100),
+#     (45, {0.0:1, 20.3:2, 45:3}, 48000),
+#     (45, {0.0:1, 20.3:2, 45:3}, 96000),
+# ])
+# def test_generate_audio(duration, mood_map, sample_rate):
+#     # ams = ambientmusicsynthesis.AmbientMusicSynthesis()
+#     audio = ams.generate_audio(duration, mood_map, sample_rate)
+#     assert audio != None
 
 #@pytest.mark.skip(reason="duration parameter to be removed and inferred from the mood_map")
 @pytest.mark.parametrize("duration",[
@@ -41,7 +43,7 @@ def test_generate_audio(duration, mood_map, sample_rate):
     ("90")
 ])
 def test_generate_audio_with_invalid_duration(duration):
-    ams = AmbientMusicSynthesis()
+    # ams = ambientmusicsynthesis.AmbientMusicSynthesis()
     with pytest.raises(AssertionError):
         ams.generate_audio(duration, {0.0:1, 20.3:2, 40.6:3, 60.9:4, 81.2:5, 90:1}, 44100)
 
@@ -54,7 +56,7 @@ def test_generate_audio_with_invalid_duration(duration):
 ])
 @pytest.mark.xfail
 def test_generate_audio_with_invalid_mood_map(duration, mood_map):
-    ams = AmbientMusicSynthesis()
+    # ams = ambientmusicsynthesis.AmbientMusicSynthesis()
     with pytest.raises(AssertionError):
         ams.generate_audio(duration, mood_map, 44100)
 

@@ -12,7 +12,10 @@ from gensound.curve import SineCurve, Line
 import pedalboard
 from pedalboard.io import AudioFile
 
-import ambientmusicsynthesis.musical_params as musical_params
+from . import synth
+from . import musical_params_unified as musical_params
+# import synth
+# import musical_params_unified as musical_params
 
 
 from icecream import ic
@@ -174,6 +177,7 @@ class AmbientMusicSynthesis():
             #     ic(chords[i])
             #     audio = audio | gensound.mix([self.s.generate_audio(midi, durations[i]) for midi in chords[i]])#self.s.generate_audio(chords[i], durations[i]*1e3)
         self.sample_rate = sample_rate
+        self.output = self.audio
         # return self.audio#.realise(sample_rate)
     def export(self, filename, sr):
         audio = self.output.realise(sr).audio
