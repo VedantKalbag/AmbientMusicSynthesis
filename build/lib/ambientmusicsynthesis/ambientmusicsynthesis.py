@@ -2,7 +2,7 @@ import os
 import json
 import timeit
 import numpy as np
-# import ambientmusicsynthesis.synth as synth
+import ambientmusicsynthesis.synth as synth
 import gensound
 from gensound.signals import Sine, Sawtooth, Square, Triangle, WhiteNoise, Silence, PinkNoise, Mix, WAV
 from gensound.effects import OneImpulseReverb, Vibrato
